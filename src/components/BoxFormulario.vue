@@ -1,118 +1,132 @@
 <script setup>
-    import { reactive, ref } from 'vue'
+    import { reactive } from 'vue';
+    defineProps(['validacao']);
 
-    const nome = ref('');
-    const email = ref('');
-    const senha = ref('');
-    const confirmarSenha = ref('');
-    const endereco = ref('');
-    const cidade = ref('');
-    const estado = ref('');
-    const hobbie = ref('');
-    const linguagemProgramacao = ref('');
-    const biografia = ref('');
+    const perfil = reactive({
+        nome: '',
+        email: '',
+        senha: '',
+        confirmarSenha: '',
+        endereco: '',
+        cidade: '',
+        estado: '',
+        hobbie: '',
+        linguagemProgramacao: '',
+        biografia: '',
+        estados: [
+            { sigla: 'AC', nome: 'Acre' },
+            { sigla: 'AL', nome: 'Alagoas' },
+            { sigla: 'AP', nome: 'Amapá' },
+            { sigla: 'AM', nome: 'Amazonas' },
+            { sigla: 'BA', nome: 'Bahia' },
+            { sigla: 'CE', nome: 'Ceará' },
+            { sigla: 'DF', nome: 'Distrito Federal' },
+            { sigla: 'ES', nome: 'Espírito Santo' },
+            { sigla: 'GO', nome: 'Goiás' },
+            { sigla: 'MA', nome: 'Maranhão' },
+            { sigla: 'MT', nome: 'Mato Grosso' },
+            { sigla: 'MS', nome: 'Mato Grosso do Sul' },
+            { sigla: 'MG', nome: 'Minas Gerais' },
+            { sigla: 'PA', nome: 'Pará' },
+            { sigla: 'PB', nome: 'Paraíba' },
+            { sigla: 'PR', nome: 'Paraná' },
+            { sigla: 'PE', nome: 'Pernambuco' },
+            { sigla: 'PI', nome: 'Piauí' },
+            { sigla: 'RJ', nome: 'Rio de Janeiro' },
+            { sigla: 'RN', nome: 'Rio Grande do Norte' },
+            { sigla: 'RS', nome: 'Rio Grande do Sul' },
+            { sigla: 'RO', nome: 'Rondônia' },
+            { sigla: 'RR', nome: 'Roraima' },
+            { sigla: 'SC', nome: 'Santa Catarina' },
+            { sigla: 'SP', nome: 'São Paulo' },
+            { sigla: 'SE', nome: 'Sergipe' },
+            { sigla: 'TO', nome: 'Tocantins' }
+        ]
+    }); 
+    
 </script>
 
 <template>
-    <div class="formulario">
+    <form v-if="!validacao" class="formulario">
       <h2>Cadastro</h2>
 
       <div class="form-group">
         <label for="">Nome:</label>
-        <input class="form-control" type="text" v-model="nome" />
+        <input class="form-control" type="text" v-model="perfil.nome" />
       </div>
 
       <div class="form-group">
         <label for="">Email:</label>
-        <input class="form-control" type="text" v-model="email" />
+        <input class="form-control" type="text" v-model="perfil.email" />
       </div>
 
       <div class="form-group">
         <label for="">Senha:</label>
-        <input class="form-control" type="password" v-model="senha"/>
+        <input class="form-control" type="password" v-model="perfil.senha" />
       </div>
 
       <div class="form-group">
         <label for="">Confirmação de senha:</label>
-        <input class="form-control" type="password" v-model="confirmarSenha"/>
+        <input class="form-control" type="password" v-model="perfil.confirmarSenha" />
       </div>
 
       <div class="form-group">
         <label for="">Endereço:</label>
-        <input class="form-control" type="text" v-model="endereco"/>
+        <input class="form-control" type="text" v-model="perfil.endereco" />
       </div>
 
       <div class="form-group">
         <label for="">Cidade:</label>
-        <input class="form-control" type="text" v-model="cidade"/>
+        <input class="form-control" type="text" v-model="perfil.cidade" />
       </div>
 
       <div class="form-group">
         <label for="estado">Estado:</label>
-        <select class="form-control" name="estado" id="estado" v-model.number.lazy="estado">
-          <option value="ac">Acre (AC)</option>
-          <option value="al">Alagoas (AL)</option>
-          <option value="ap">Amapá (AP)</option>
-          <option value="am">Amazônas (AM)</option>
-          <option value="ba">Bahia (BA)</option>
-          <option value="ce">Ceará (CE)</option>
-          <option value="df">Distrito Federal (DF)</option>
-          <option value="es">Espírito Santo (ES)</option>
-          <option value="go">Goiás (GO)</option>
-          <option value="ma">Maranhão (MA)</option>
-          <option value="mg">Minas Gerais (MG)</option>
-          <option value="ms">Mato Grosso do Sul (MS)</option>
-          <option value="mt">Mato Grosso (MT)</option>   
-          <option value="pa">Pará (PA)</option>
-          <option value="pb">Paraíba (PB)</option>
-          <option value="pe">Pernambuco (PE)</option>
-          <option value="pr">Paraná (PR)</option>
-          <option value="pi">Piauí (PI)</option>
-          <option value="rj">Rio de Janeiro (RJ)</option>
-          <option value="rn">Rio Grande do Norte (RN)</option>
-          <option value="ro">Rondônia (RO)</option>
-          <option value="rr">Roraima (RR)</option>
-          <option value="rs">Rio Grande do Sul (RS)</option>
-          <option value="sc">Santa Catarina (SC)</option>
-          <option value="se">Sergipe (SE)</option>
-          <option value="sp">São Paulo (SP)</option>
-          <option value="to">Tocantins (TO)</option>
+        <select class="form-control" name="estado" id="estado" v-model="perfil.estado">
+          <option v-for="estado in perfil.estados" :key="estado.sigla" :value="estado.sigla"> {{ estado.nome }} </option>
         </select>
       </div>
-    
+
       <div class="form-group">
         <label for="">Hobbie:</label>
-        <input class="form-control" type="text" v-model="hobbie"/>
+        <input class="form-control" type="text" v-model="perfil.hobbie" />
       </div>
-    
+
       <div>
         <label for="linguagemProgramacao">Linguagem de programação:</label>
-        <input class="form-control" type="text" id="linguagemProgramacao" v-model.number.lazy="linguagemProgramacao">
+        <input class="form-control" type="text" id="linguagemProgramacao" v-model="perfil.linguagemProgramacao" />
       </div>
 
       <div>
         <label for="biografia">Biografia:</label>
-        <textarea class="form-control" name="biografia" id="biografia" cols="30" rows="10" v-model.number.lazy="biografia"></textarea> 
-      </div>
-      
-      <div>
-        <button type="button" class="btn btn-primary" @click="mostrarResultado()">Mostrar</button>
+        <textarea
+          class="form-control"
+          name="biografia"
+          id="biografia"
+          cols="30"
+          rows="10"
+          v-model="perfil.biografia"
+        ></textarea>
       </div>
 
-    </div>
+      <div>
+        <button type="button" class="btn btn-primary" @click="$emit('envio', {...perfil})"> Mostrar </button>
+      </div>
+    </form>
+
 </template>
 
 <style scoped>
-    
     .formulario {
-        background-color: rgb(179, 214, 243);
-        width: 48%;
-        border-radius: 10px;
-        padding: 20px;
-        margin: 0 0 5rem;
+      display: grid;
+      width: 48%;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 0 0 5rem;
+      background-color: rgb(179, 214, 243);
     }
 
     button {
-        margin: 1rem 0;
+      margin: 1rem 0;
     }
 </style>

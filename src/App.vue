@@ -1,67 +1,55 @@
 <script setup>
-  import BoxFormulario from './components/BoxFormulario.vue';
+import { ref } from 'vue';
+import BoxFormulario from './components/BoxFormulario.vue';
+import BoxResultado from './components/BoxResultado.vue';
+const perfil = ref({ nome: '' });
+const validacao = ref(false);
 
-  const validacao = ref(false);
+function enviarItem(item) {
+  Object.assign(perfil.value, item);
+  validacao.value = !validacao.value;
+}
 
-  
-  
-  /* const contador = ref(0);
+/* const validacao = ref(false);
 
-   function mostrarResultado() {
-  if (confirmarSenha != senha || !email.includes("@") || senha == '') alert("Credenciais inválidas ou campos não prenchidos!");
-  else {
-    contador.value++;
-    console.log("qe");
-
-    if (contador.value < 2) validacao.value = true;
-    else {
-      validacao.value = false
-      contador.value = 0
+  function mostrarResultado() {
+    if (nome.value == '' || email.value == '' || senha.value == '' || confirmarSenha.value == '' || 
+    endereco.value == '' || cidade.value == '' || estado.value == '' || hobbie.value == '' || 
+    linguagemProgramacao.value == '' || biografia.value == '') {
+      alert('Preencha todos os campos');
     }
-  } 
-}*/
+    else {
+      
+      if (nome.value.length < 5) alert('Preencha seu nome corretamente');
+      else if (!email.value.includes('@')) alert('Preencha seu email corretamente');
+      else if (senha.value.length < 4) alert('Senha fraca');
+      else if (confirmarSenha.value != senha.value) alert('Campo "Confirmar senha" preenchido incorretamente');
+      else validacao.value = true;
 
+    }
+  } */
 </script>
 
 <template>
-  <div class="titulo">
-    <h1>Formulário de Cadastro de Produtos</h1>
-  </div>
-  
-  <box-formulario />
-  
-
-    <div v-if="validacao === true" class="resultado">
-      <h2>Resultado</h2>
-      <p>Nome: {{ nome }}</p>
-      <p>Email: {{ email }}</p>
-      <p>Senha: {{ senha }}</p>
-      <p>Estado: {{ estado }}</p>
-      <p>Cidade: {{ cidade }}</p>
-      <p>Endereço: {{ endereco }}</p>
-      <p>Hobbies: {{ hobbie }}</p>
-      <p>Linguagem de programação: {{ linguagemProgramacao }}</p>
-      <p>Biografia: {{ biografia }}</p>
+  <main class="conteudo">
+    <div class="titulo">
+      <h1>Formulário de Cadastro de Produtos</h1>
     </div>
+
+    <BoxFormulario :validacao="validacao" @envio="enviarItem" />
+    <BoxResultado :perfil="perfil" :validacao="validacao"/>
+  </main>
   
 </template>
 
 <style scoped>
+  main{
+    display: grid;
+    justify-items: center;
+  }
 
   .titulo {
     text-align: center;
     padding: 3rem 0;
   }
-
-  .formulario, .resultado {
-    width: 48%;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 0 0 5rem;
-  }
-
-  .resultado {
-    background-color: #dac2eb;
-  }
-
 </style>
